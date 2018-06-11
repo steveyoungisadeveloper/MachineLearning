@@ -114,13 +114,13 @@ def classify0(inX, dataSet, labels, k):
     # b=sorted(a,key=opertator.itemgetter(1,0)) >>>b=[('c',0),('a',1),('b',2)] 这个是先比较第2个元素，然后对第一个元素进行排序，形成多级排序。
     sortedClassCount = sorted(classCount.items(), key=operator.itemgetter(1), reverse=True)
     return sortedClassCount[0][0]
-    
+
     # ------------------------------------------------------------------------------------------------------------------------------------------
     # 实现 classify0() 方法的第二种方式
 
     # """
     # 1. 计算距离
-    
+
     # 欧氏距离： 点到点之间的距离
     #    第一行： 同一个点 到 dataSet的第一个点的距离。
     #    第二行： 同一个点 到 dataSet的第二个点的距离。
@@ -129,15 +129,15 @@ def classify0(inX, dataSet, labels, k):
 
     # [[1,2,3],[1,2,3]]-[[1,2,3],[1,2,0]]
     # (A1-A2)^2+(B1-B2)^2+(c1-c2)^2
-    
+
     # inx - dataset 使用了numpy broadcasting，见 https://docs.scipy.org/doc/numpy-1.13.0/user/basics.broadcasting.html
     # np.sum() 函数的使用见 https://docs.scipy.org/doc/numpy-1.13.0/reference/generated/numpy.sum.html
     # """
 	#   dist = np.sum((inx - dataset)**2, axis=1)**0.5
-    
+
     # """
     # 2. k个最近的标签
-    
+
     # 对距离排序使用numpy中的argsort函数， 见 https://docs.scipy.org/doc/numpy-1.13.0/reference/generated/numpy.sort.html#numpy.sort
     # 函数返回的是索引，因此取前k个索引使用[0 : k]
     # 将这k个标签存在列表k_labels中
@@ -145,7 +145,7 @@ def classify0(inX, dataSet, labels, k):
     # k_labels = [labels[index] for index in dist.argsort()[0 : k]]
 	# """
     # 3. 出现次数最多的标签即为最终类别
-    
+
     # 使用collections.Counter可以统计各个标签的出现次数，most_common返回出现次数最多的标签tuple，例如[('lable1', 2)]，因此[0][0]可以取出标签值
 	# """
     # label = Counter(k_labels).most_common(1)[0][0]
@@ -175,7 +175,7 @@ def file2matrix(filename):
     # 获得文件中的数据行的行数
     numberOfLines = len(fr.readlines())
     # 生成对应的空矩阵
-    # 例如：zeros(2，3)就是生成一个 2*3 的矩阵，各个位置上全是 0 
+    # 例如：zeros(2，3)就是生成一个 2*3 的矩阵，各个位置上全是 0
     returnMat = zeros((numberOfLines, 3))  # prepare matrix to return
     classLabelVector = []  # prepare labels return
     fr = open(filename, 'r')
@@ -216,13 +216,13 @@ def autoNorm(dataSet):
     ranges = maxVals - minVals
     # -------第一种实现方式---start-------------------------
     normDataSet = zeros(shape(dataSet))
-    m = dataSet.shape[0]
+    m = dataSet.shape[0] #数组一维长度 就是最外围长度
     # 生成与最小值之差组成的矩阵
     normDataSet = dataSet - tile(minVals, (m, 1))
     # 将最小值之差除以范围组成矩阵
     normDataSet = normDataSet / tile(ranges, (m, 1))  # element wise divide
     # -------第一种实现方式---end---------------------------------------------
-    
+
     # # -------第二种实现方式---start---------------------------------------
     # norm_dataset = (dataset - minvalue) / ranges
     # # -------第二种实现方式---end---------------------------------------------
