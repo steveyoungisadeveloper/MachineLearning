@@ -216,9 +216,9 @@ def autoNorm(dataSet):
     ranges = maxVals - minVals
     # -------第一种实现方式---start-------------------------
     normDataSet = zeros(shape(dataSet))
-    m = dataSet.shape[0] #数组一维长度 就是最外围长度
+    m = dataSet.shape[0] #数组一维长度 就是最外围长度 这里是矩阵的行
     # 生成与最小值之差组成的矩阵
-    normDataSet = dataSet - tile(minVals, (m, 1))
+    normDataSet = dataSet - tile(minVals, (m, 1)) # tile函数是重复将m填入m行1列的矩阵
     # 将最小值之差除以范围组成矩阵
     normDataSet = normDataSet / tile(ranges, (m, 1))  # element wise divide
     # -------第一种实现方式---end---------------------------------------------
